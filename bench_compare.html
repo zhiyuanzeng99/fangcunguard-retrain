@@ -1,0 +1,333 @@
+<title>FangcunGuard 竞品对比</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --bg:       #f4f6fa;
+  --surface:  #ffffff;
+  --border:   #dde2ec;
+  --text:     #0f1923;
+  --muted:    #5a6678;
+  --our:      #2563eb;
+  --our-row:  #eef4ff;
+  --vg:       #7c3aed;
+  --vg-row:   #faf7ff;
+  --ok:       #059669;
+  --warn:     #d97706;
+  --err:      #dc2626;
+  --note-bg:  #fffbeb;
+  --note-br:  #fbbf24;
+  --head-bg:  #f1f4f9;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:       #0d1117; --surface:  #161c27; --border:   #242d3e;
+    --text:     #e2e8f0; --muted:    #7a8ca0;
+    --our-row:  #0d1e3d; --vg-row:   #1a0f35; --head-bg:  #111827;
+    --note-bg:  #1c1500; --note-br:  #92400e;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:       #0d1117; --surface:  #161c27; --border:   #242d3e;
+  --text:     #e2e8f0; --muted:    #7a8ca0;
+  --our-row:  #0d1e3d; --vg-row:   #1a0f35; --head-bg:  #111827;
+  --note-bg:  #1c1500; --note-br:  #92400e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-size: 14px; line-height: 1.6;
+  padding: 2rem 1.5rem 4rem;
+}
+
+.page-header { max-width: 1120px; margin: 0 auto 1.4rem; }
+.eyebrow {
+  font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--our); margin-bottom: 0.35rem;
+}
+h1 { font-size: 1.45rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.2rem; }
+.subtitle { color: var(--muted); font-size: 0.82rem; }
+
+/* Summary strip */
+.cards {
+  max-width: 1120px; margin: 0 auto 1.2rem;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.7rem;
+}
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.75rem 1rem;
+}
+.card .c-label { font-size: 0.68rem; color: var(--muted); margin-bottom: 0.35rem; font-family: 'IBM Plex Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+.card .c-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.1rem; }
+.card .c-val { font-family: 'IBM Plex Mono', monospace; font-size: 1.05rem; font-weight: 500; }
+.card .c-who { font-size: 0.65rem; color: var(--muted); }
+.card .c-delta { font-size: 0.68rem; font-family: 'IBM Plex Mono', monospace; margin-top: 0.3rem; }
+.delta-good { color: var(--ok); } .delta-bad { color: var(--err); } .delta-na { color: var(--muted); }
+
+/* Note */
+.note {
+  max-width: 1120px; margin: 0 auto 1rem;
+  padding: 0.6rem 1rem; border-left: 3px solid var(--note-br);
+  background: var(--note-bg); border-radius: 5px;
+  font-size: 0.77rem; line-height: 1.65;
+}
+.note strong { font-weight: 600; }
+
+/* Table */
+.tbl-wrap {
+  max-width: 1120px; margin: 0 auto;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; overflow-x: auto;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.79rem; font-variant-numeric: tabular-nums; }
+
+thead tr:first-child th {
+  background: var(--head-bg); padding: 0.55rem 0.75rem;
+  text-align: center; font-size: 0.73rem; font-weight: 600;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+thead tr:first-child th:first-child { text-align: left; min-width: 175px; }
+thead tr:last-child th {
+  background: var(--head-bg); padding: 0.35rem 0.75rem;
+  text-align: center; font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); border-bottom: 2px solid var(--border); white-space: nowrap;
+}
+thead tr:last-child th:first-child { text-align: left; }
+
+tbody tr { border-bottom: 1px solid var(--border); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 0.6rem 0.75rem; text-align: center; vertical-align: middle; white-space: nowrap; }
+td:first-child { text-align: left; }
+
+tr.our-row { background: var(--our-row); }
+tr.vg-row  { background: var(--vg-row); }
+
+.model-name { font-weight: 600; font-size: 0.82rem; }
+.model-sub  { font-size: 0.67rem; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+
+.val { font-family: 'IBM Plex Mono', monospace; }
+.good  { color: var(--ok);   font-weight: 600; }
+.warn  { color: var(--warn); }
+.bad   { color: var(--err);  font-weight: 600; }
+.na    { color: var(--muted); }
+
+.tag {
+  display: inline-block; font-size: 0.58rem; font-family: 'IBM Plex Mono', monospace;
+  padding: 0.08rem 0.35rem; border-radius: 3px; margin-left: 5px;
+  vertical-align: middle; font-weight: 600;
+}
+.tag-our  { background: #dbeafe; color: #1d4ed8; }
+.tag-vg   { background: #ede9fe; color: #5b21b6; }
+
+/* win dot */
+.w { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--ok); margin-left: 3px; vertical-align: middle; }
+</style>
+
+<div class="page-header">
+  <div class="eyebrow">Safety Guard 竞品对比 · 2026-09 · m14+policy+benign_en</div>
+  <h1>FangcunGuard m14 vs 竞品全量对比</h1>
+  <div class="subtitle">VirtueGuard 数据来自其官方发布；FangcunGuard 为本地评测结果（加入 benign_en_override 白名单后）</div>
+</div>
+
+<!-- Summary cards -->
+<div class="cards">
+  <div class="card">
+    <div class="c-label">OpenAI-Mod F1</div>
+    <div class="c-row"><span class="c-val" style="color:var(--warn)">0.695</span><span class="c-who">FangcunGuard</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--vg)">0.890</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-good">↑ +0.003 vs 上版</div>
+  </div>
+  <div class="card">
+    <div class="c-label">OpenAI-Mod FPR</div>
+    <div class="c-row"><span class="c-val" style="color:var(--err)">0.327</span><span class="c-who">FangcunGuard</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--ok)">0.058</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-good">↓ −0.006 vs 上版</div>
+  </div>
+  <div class="card">
+    <div class="c-label">ToxicChat F1</div>
+    <div class="c-row"><span class="c-val" style="color:var(--warn)">0.714</span><span class="c-who">FangcunGuard</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--vg)">0.793</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-na">≈ 持平</div>
+  </div>
+  <div class="card">
+    <div class="c-label">ToxicChat FPR</div>
+    <div class="c-row"><span class="c-val" style="color:var(--warn)">0.079</span><span class="c-who">FangcunGuard</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--ok)">0.008</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-good">↓ −0.004 vs 上版</div>
+  </div>
+  <div class="card">
+    <div class="c-label">HarmBench F1</div>
+    <div class="c-row"><span class="c-val" style="color:var(--ok)">0.983</span><span class="c-who">FangcunGuard ✓</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--muted)">0.891</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-na">领先 +0.09</div>
+  </div>
+  <div class="card">
+    <div class="c-label">延迟</div>
+    <div class="c-row"><span class="c-val" style="color:var(--ok)">~4ms</span><span class="c-who">FangcunGuard ✓</span></div>
+    <div class="c-row"><span class="c-val" style="color:var(--muted)">8ms</span><span class="c-who">VirtueGuard</span></div>
+    <div class="c-delta delta-na">快 2×</div>
+  </div>
+</div>
+
+<div class="note">
+  <strong>OpenAI-Mod FPR 仍高（0.327）根因：</strong>safe 样本中大量是「批评/报道有害内容」文本，XLM-R 模型看到 hate 关键词即触发，无法区分「谈论 X」与「宣扬 X」。白名单规则只能修有明显语境标志的样本（−7 条），主体问题需要补训练数据解决。
+</div>
+
+<!-- Main table -->
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Model</th>
+      <th colspan="2">OpenAI Moderation</th>
+      <th colspan="2">Toxic Chat</th>
+      <th colspan="2">ConvAbuse</th>
+      <th colspan="2">HarmBench Behaviors</th>
+      <th colspan="2">HarmfulQA</th>
+      <th colspan="2">HateMoji</th>
+      <th rowspan="2">Latency<br>(ms)</th>
+    </tr>
+    <tr>
+      <th>F1</th><th>FPR</th>
+      <th>F1</th><th>FPR</th>
+      <th>F1</th><th>FPR</th>
+      <th>F1</th><th>FPR</th>
+      <th>F1</th><th>FPR</th>
+      <th>F1</th><th>FPR</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="our-row">
+      <td>
+        <div class="model-name">FangcunGuard m14 <span class="tag tag-our">我们</span></div>
+        <div class="model-sub">XLM-R-large · +policy+benign_en · 560M</div>
+      </td>
+      <td><span class="val warn">0.695</span></td>
+      <td><span class="val bad">0.327</span></td>
+      <td><span class="val warn">0.714</span></td>
+      <td><span class="val warn">0.079</span></td>
+      <td><span class="val na">—</span></td>
+      <td><span class="val na">—</span></td>
+      <td><span class="val good">0.983<span class="w"></span></span></td>
+      <td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.833</span></td>
+      <td><span class="val na">N/A</span></td>
+      <td><span class="val na">—</span></td>
+      <td><span class="val na">—</span></td>
+      <td><span class="val good">~4<span class="w"></span></span></td>
+    </tr>
+
+    <tr class="vg-row">
+      <td>
+        <div class="model-name">VirtueGuard <span class="tag tag-vg">👑 SOTA</span></div>
+        <div class="model-sub">闭源 · official numbers</div>
+      </td>
+      <td><span class="val good">0.890<span class="w"></span></span></td>
+      <td><span class="val good">0.058<span class="w"></span></span></td>
+      <td><span class="val good">0.793<span class="w"></span></span></td>
+      <td><span class="val good">0.008<span class="w"></span></span></td>
+      <td><span class="val good">0.808<span class="w"></span></span></td>
+      <td><span class="val good">0.068<span class="w"></span></span></td>
+      <td><span class="val warn">0.891</span></td>
+      <td><span class="val na">N/A</span></td>
+      <td><span class="val good">0.987<span class="w"></span></span></td>
+      <td><span class="val good">0.003<span class="w"></span></span></td>
+      <td><span class="val good">0.953<span class="w"></span></span></td>
+      <td><span class="val good">0.100<span class="w"></span></span></td>
+      <td><span class="val warn">8</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">LlamaGuard 2 8B</div><div class="model-sub">Meta · 8B</div></td>
+      <td><span class="val warn">0.759</span></td><td><span class="val warn">0.085</span></td>
+      <td><span class="val bad">0.419</span></td><td><span class="val warn">0.031</span></td>
+      <td><span class="val warn">0.708</span></td><td><span class="val warn">0.089</span></td>
+      <td><span class="val warn">0.812</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val bad">0.391</span></td><td><span class="val good">0.006</span></td>
+      <td><span class="val warn">0.793</span></td><td><span class="val good">0.033</span></td>
+      <td><span class="val na">101</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">LlamaGuard 3 8B</div><div class="model-sub">Meta · 8B</div></td>
+      <td><span class="val warn">0.787</span></td><td><span class="val warn">0.098</span></td>
+      <td><span class="val warn">0.570</span></td><td><span class="val warn">0.043</span></td>
+      <td><span class="val warn">0.737</span></td><td><span class="val good">0.017</span></td>
+      <td><span class="val warn">0.884</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.587</span></td><td><span class="val good">0.004</span></td>
+      <td><span class="val warn">0.735</span></td><td><span class="val warn">0.136</span></td>
+      <td><span class="val na">101</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">IBM Granite Guardian 3.1 8B</div><div class="model-sub">IBM · 8B</div></td>
+      <td><span class="val warn">0.777</span></td><td><span class="val warn">0.156</span></td>
+      <td><span class="val warn">0.683</span></td><td><span class="val good">0.015</span></td>
+      <td><span class="val warn">0.721</span></td><td><span class="val warn">0.117</span></td>
+      <td><span class="val warn">0.824</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.769</span></td><td><span class="val warn">0.047</span></td>
+      <td><span class="val good">0.892</span></td><td><span class="val warn">0.237</span></td>
+      <td><span class="val na">94</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">IBM Granite Guardian 3.1 2B</div><div class="model-sub">IBM · 2B</div></td>
+      <td><span class="val warn">0.687</span></td><td><span class="val bad">0.328</span></td>
+      <td><span class="val bad">0.498</span></td><td><span class="val warn">0.125</span></td>
+      <td><span class="val warn">0.769</span></td><td><span class="val warn">0.077</span></td>
+      <td><span class="val warn">0.819</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.719</span></td><td><span class="val good">0.003</span></td>
+      <td><span class="val warn">0.822</span></td><td><span class="val warn">0.261</span></td>
+      <td><span class="val warn">32</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">Nvidia Aegis Guard Defensive 8B</div><div class="model-sub">Nvidia · 8B</div></td>
+      <td><span class="val bad">0.658</span></td><td><span class="val bad">0.445</span></td>
+      <td><span class="val warn">0.576</span></td><td><span class="val warn">0.091</span></td>
+      <td><span class="val bad">0.255</span></td><td><span class="val bad">0.192</span></td>
+      <td><span class="val warn">0.815</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val bad">0.304</span></td><td><span class="val bad">0.229</span></td>
+      <td><span class="val warn">0.872</span></td><td><span class="val bad">0.717</span></td>
+      <td><span class="val na">112</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">Nvidia Llama 3.1 NemoGuard 8B</div><div class="model-sub">Nvidia · 8B</div></td>
+      <td><span class="val warn">0.712</span></td><td><span class="val warn">0.156</span></td>
+      <td><span class="val warn">0.729</span></td><td><span class="val good">0.015</span></td>
+      <td><span class="val warn">0.730</span></td><td><span class="val warn">0.073</span></td>
+      <td><span class="val warn">0.779</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.884</span></td><td><span class="val warn">0.047</span></td>
+      <td><span class="val warn">0.793</span></td><td><span class="val warn">0.237</span></td>
+      <td><span class="val na">368</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">Azure AI Content Safety</div><div class="model-sub">Microsoft · cloud API</div></td>
+      <td><span class="val warn">0.813</span></td><td><span class="val warn">0.084</span></td>
+      <td><span class="val warn">0.531</span></td><td><span class="val good">0.009</span></td>
+      <td><span class="val bad">0.370</span></td><td><span class="val good">0.030</span></td>
+      <td><span class="val bad">0.400</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val bad">0.489</span></td><td><span class="val warn">0.056</span></td>
+      <td><span class="val bad">0.661</span></td><td><span class="val warn">0.142</span></td>
+      <td><span class="val na">468</span></td>
+    </tr>
+
+    <tr>
+      <td><div class="model-name">AWS Bedrock Guardrail</div><div class="model-sub">Amazon · cloud API</div></td>
+      <td><span class="val warn">0.765</span></td><td><span class="val bad">0.235</span></td>
+      <td><span class="val bad">0.485</span></td><td><span class="val warn">0.142</span></td>
+      <td><span class="val warn">0.649</span></td><td><span class="val warn">0.134</span></td>
+      <td><span class="val warn">0.720</span></td><td><span class="val na">N/A</span></td>
+      <td><span class="val warn">0.734</span></td><td><span class="val warn">0.103</span></td>
+      <td><span class="val warn">0.765</span></td><td><span class="val bad">0.493</span></td>
+      <td><span class="val na">412</span></td>
+    </tr>
+
+  </tbody>
+</table>
+</div>

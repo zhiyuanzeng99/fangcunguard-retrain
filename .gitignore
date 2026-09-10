@@ -1,0 +1,19 @@
+# Model weights
+models/*/
+!models/*.log
+
+# Data/cache
+*.jsonl
+*.pkl
+*.bin
+__pycache__/
+*.pyc
+.DS_Store
+
+# Large JSON data files (embedded in HTML already)
+d.json
+m.json
+lsr.json
+cfg.json
+eng.json
+engd.json
